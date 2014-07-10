@@ -1,0 +1,15 @@
+#!/bin/sh
+
+# Make sure these directories exist.
+mkdir -p /srv/keystone/ssl/{certs,private}
+chown 700 /srv/keystone/ssl/private
+
+# make sure permissions are correct.
+chown -R keystone:keystone /srv/keystone
+
+runuser -u keystone -g keystone -- /usr/bin/keystone-manage db_sync
+runuser -u keystone -g keystone -- /usr/bin/keystone-manage pki_setup \
+	--keystone-user keystone \
+	--keystone-group keystone
+exec runuser -u keystone -g keystone -- /usr/bin/keystone-all
+
