@@ -46,10 +46,9 @@ RUN crudini --set /etc/keystone/keystone.conf \
 	DEFAULT \
 	admin_token \
 	ADMIN
-RUN crudini --set /etc/keystone/keystone.conf \
+RUN crudini --del /etc/keystone/keystone.conf \
 	DEFAULT \
-	log_file \
-	/srv/keystone/keystone.log
+	log_file
 RUN crudini --set /etc/keystone/keystone.conf \
 	database \
 	connection \
