@@ -1,5 +1,5 @@
 #!/bin/sh
 
 mkdir -p /srv/keystone/log/keystone
-exec svlogd -tt /srv/keystone/log/keystone/
+exec svlogd /srv/keystone/log/keystone/
 
