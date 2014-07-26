@@ -71,6 +71,8 @@ RUN crudini --set /etc/keystone/keystone.conf \
 	/srv/keystone/ssl/private/cakey.pem
 
 RUN useradd -r -d /srv/keystone -m keystone
+RUN mkdir -p /etc/runit/sysinit
+ADD keystone.sysinit /etc/runit/sysinit/keystone
 
 VOLUME /srv/keystone
 EXPOSE 5000
