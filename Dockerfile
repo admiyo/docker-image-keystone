@@ -73,6 +73,7 @@ RUN crudini --set /etc/keystone/keystone.conf \
 RUN useradd -r -d /srv/keystone -m keystone
 RUN mkdir -p /etc/runit/sysinit
 ADD keystone.sysinit /etc/runit/sysinit/keystone
+ADD service/ /service/
 
 VOLUME /srv/keystone
 EXPOSE 5000
