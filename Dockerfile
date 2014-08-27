@@ -33,42 +33,8 @@ RUN cp etc/keystone.conf.sample /etc/keystone/keystone.conf
 RUN cp etc/keystone-paste.ini /etc/keystone/
 RUN cp etc/policy.json /etc/keystone/
 
-# Configure keystone
-RUN crudini --set /etc/keystone/keystone.conf \
-	DEFAULT \
-	driver \
-	keystone.identity.backends.sql.Identity
-RUN crudini --set /etc/keystone/keystone.conf \
-	DEFAULT \
-	idle_timeout \
-	200
-RUN crudini --set /etc/keystone/keystone.conf \
-	DEFAULT \
-	admin_token \
-	ADMIN
-RUN crudini --del /etc/keystone/keystone.conf \
-	DEFAULT \
-	log_file
-RUN crudini --set /etc/keystone/keystone.conf \
-	database \
-	connection \
-	sqlite:////srv/keystone/keystone.db
-RUN crudini --set /etc/keystone/keystone.conf \
-	signing \
-	certfile \
-	/srv/keystone/ssl/certs/signing_cert.pem
-RUN crudini --set /etc/keystone/keystone.conf \
-	signing \
-	keyfile \
-	/srv/keystone/ssl/private/signing_key.pem
-RUN crudini --set /etc/keystone/keystone.conf \
-	signing \
-	ca_certs \
-	/srv/keystone/ssl/certs/ca.pem
-RUN crudini --set /etc/keystone/keystone.conf \
-	signing \
-	ca_key \
-	/srv/keystone/ssl/private/cakey.pem
+ADD configure-keystone.sh /opt/keystone/configure-keystone.sh
+RUN sh /opt/keystone/configure-keystone.sh
 
 RUN useradd -r -d /srv/keystone -m keystone
 RUN mkdir -p /etc/runit/sysinit
